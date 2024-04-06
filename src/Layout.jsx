@@ -6,6 +6,7 @@ import About from './pages/About'
 import ProfilePage from './pages/ProfilePage'
 
 const Layout = () => {
+
   return (
     <>
     <Header />

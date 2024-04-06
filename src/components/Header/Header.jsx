@@ -15,6 +15,7 @@ const Header = () => {
 					</NavLink>
 					
 				</div>
+
 				<div className="text-gray-500 order-3 w-full md:w-auto md:order-2">
 					<ul className="flex font-semibold justify-between">
 						{/* <!-- Active Link = text-indigo-500
