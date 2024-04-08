@@ -1,18 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import sh2 from '../assets/images/sh2.webp';
+import { useParams } from 'react-router-dom';
+import { useFirebase } from '../context/firebase';
+
+
 
 
 function ProfilePage() {
+    const params = useParams();
+    const firebase = useFirebase();
+
+
+    const [data, setData] = useState(null);
+    const [githubData, setGithubData] = useState(null);
+    const [repoDetails, setRepoDetails] = useState([]);
+
+
+
+    useEffect(() => {
+        // Fetch user data from Firebase
+        firebase.getUserById(params.userid).then((userData) => {
+            setData(userData.data());
+        }).catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
+    }, [firebase, params.userid]);
+
+    useEffect(() => {
+        // Fetch GitHub data if user data is available
+        if (data && data.githuburl) {
+            const handleGetGithubData = async () => {
+                try {
+                    const response = await fetch(`https://api.github.com/users/${data.githuburl}`);
+                    const github = await response.json();
+                    setGithubData(github);
+                } catch (error) {
+                    console.error('Error fetching GitHub data:', error);
+                }
+            };
+
+            handleGetGithubData();
+        }
+    }, [data]);
+
+    useEffect(() => {
+        // Fetch GitHub data if user data is available
+        if (data && data.githuburl && githubData && githubData.repos_url) {
+            const handleRepoData = async () => {
+                try {
+                    const response = await fetch(`${githubData.repos_url}`);
+                    const repos = await response.json();
+                    setRepoDetails(repos);
+                } catch (error) {
+                    console.error('Error fetching GitHub data:', error);
+                }
+            };
+
+            handleRepoData();
+        }
+    }, [data, githubData]);
+
+
+
+
+
+
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [showExtraContent, setShowExtraContent] = useState(false);
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setCurrentDateTime(new Date());
-        }, 1000); // Update every second
 
-        return () => clearInterval(intervalId);
-    }, []);
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         setCurrentDateTime(new Date());
+    //     }, 1000); // Update every second
+
+    //     return () => clearInterval(intervalId);
+    // }, []);
 
     const toggleExtraContent = () => {
         setShowExtraContent(!showExtraContent);
@@ -38,51 +101,38 @@ function ProfilePage() {
                 <div className="w-[350px]  mx-auto bg-white border shadow-md h-[570px] p-4 mt-5">
                     <div className='flex  justify-around '>
                         <div className='flex justify-center items-center'>
-                            <img src={sh2} className="w-16 h-16" alt="profile" />
+                            <img src={githubData?.avatar_url} className="w-16 h-16" alt="profile" />
                         </div>
                         <div className="flex flex-col items-start ">
-                            <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                            <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                            <h6 className=" mb-2 ">Technology: Java</h6>
+                            <h2 className="text-xl font-bold text-green-600">{data?.name}</h2>
+                            <h5 className=" ">Location: {githubData?.location}</h5>
+                            <h6 className=" mb-2 ">Created: {githubData?.created_at}</h6>
+
                         </div>
                     </div>
                     <div className="max-w-xs shadow-sm mt-4 mx-auto bg-white rounded-md" style={{ width: '20rem' }}>
                         <ul className="list-none p-6 m-2 ">
-                            <li className="border-t border-gray-200 shadow-2xl ">An item</li>
+                            <li className="border-t border-gray-200 shadow-2xl ">{githubData?.bio}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
-                            <li className=" border-t border-gray-200 shadow-2xl ">A second item</li>
-                            <p className='border-t mb-2 shadow-2xl'></p>
-
-                            <li className="border-t border-gray-200 shadow-2xl ">A third item</li>
+                            <li className="text-blue-600 border-t border-gray-200 shadow-2xl "><a href={githubData?.html_url}>Github Link</a></li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            <li className="border-t border-gray-200 shadow-2xl ">An item</li>
+                            <li className="border-t border-gray-200 shadow-2xl ">Company: {githubData?.company}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            <li className="border-t border-gray-200 shadow-2xl ">A second item</li>
+                            <li className="border-t border-gray-200 shadow-2xl ">Followers: {githubData?.followers}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            <li className="border-t border-gray-200 shadow-2xl ">A third item</li>
+                            <li className="border-t border-gray-200 shadow-2xl ">Following: {githubData?.following}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            <li className="border-t border-gray-200 shadow-2xl ">An item</li>
+                            <li className="border-t border-gray-200 shadow-2xl ">Public Repos: {githubData?.public_repos}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            <li className="border-t border-gray-200 shadow-2xl ">A second item</li>
+                            <li className="border-t border-gray-200 shadow-2xl ">Last Seen: {githubData?.updated_at}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            <li className="border-t border-gray-200 shadow-2xl ">A third item</li>
-                            <p className='border-t mb-2 shadow-2xl'></p>
-
-                            <li className="border-t border-gray-200 shadow-2xl ">An item</li>
-                            <p className='border-t mb-2 shadow-2xl'></p>
-
-                            <li className="border-t border-gray-200 shadow-2xl ">A second item</li>
-                            <p className='border-t mb-2 shadow-2xl'></p>
-
-                            <li className="border-t border-gray-200 shadow-2xl ">A third item</li>
-                            <p className='border-t mb-2 shadow-2xl'></p>
-
+                            
                         </ul>
                     </div>
                 </div>
@@ -91,42 +141,21 @@ function ProfilePage() {
 
                 <div className="w-[900px] mx-auto border shadow-md  m-4">
                     <div className="p-4">
+                        {repoDetails.map((repo) => (
+                            <>
+                                <div className="max-w-30vw mx-auto bg-white border shadow-2xl rounded-md mb-2">
+                                    <div className="p-4">
+                                        <h5 className="text-lg font-semibold mb-1">{repo.name}</h5>
+                                        <h6 className="text-sm text-gray-600 mb-2">{repo.description}</h6>
+                                        <a href={repo.html_url} className="text-blue-500 hover:text-blue-600 mr-1">Repo link</a>
+                                    </div>
+                                </div>
+                            </>
+                        ))}
 
-                        <div className="max-w-30vw mx-auto bg-white border shadow-2xl rounded-md mb-2">
-                            <div className="p-4">
-                                <h5 className="text-lg font-semibold mb-1">Card title</h5>
-                                <h6 className="text-sm text-gray-600 mb-2">Card subtitle</h6>
-                                <a href="#" className="text-blue-500 hover:text-blue-600 mr-1">Card link</a>
-                                <a href="#" className="text-blue-500 hover:text-blue-600">Another link</a>
-                            </div>
-                        </div>
 
-                        <div className="max-w-30vw mx-auto bg-white border shadow-2xl rounded-md mb-2">
-                            <div className="p-4">
-                                <h5 className="text-lg font-semibold mb-1">Card title</h5>
-                                <h6 className="text-sm text-gray-600 mb-2">Card subtitle</h6>
-                                <a href="#" className="text-blue-500 hover:text-blue-600 mr-1">Card link</a>
-                                <a href="#" className="text-blue-500 hover:text-blue-600">Another link</a>
-                            </div>
-                        </div>
 
-                        <div className="max-w-30vw mx-auto bg-white border shadow-2xl mb-2 rounded-md">
-                            <div className="p-4">
-                                <h5 className="text-lg font-semibold mb-1">Card title</h5>
-                                <h6 className="text-sm text-gray-600 mb-2">Card subtitle</h6>
-                                <a href="#" className="text-blue-500 hover:text-blue-600 mr-1">Card link</a>
-                                <a href="#" className="text-blue-500 hover:text-blue-600">Another link</a>
-                            </div>
-                        </div>
 
-                        <div className="max-w-30vw mx-auto bg-white border shadow-2xl  rounded-md">
-                            <div className="p-4">
-                                <h5 className="text-lg font-semibold mb-1">Card title</h5>
-                                <h6 className="text-sm text-gray-600 mb-2">Card subtitle</h6>
-                                <a href="#" className="text-blue-500 hover:text-blue-600 mr-1">Card link</a>
-                                <a href="#" className="text-blue-500 hover:text-blue-600">Another link</a>
-                            </div>
-                        </div>
 
                         <div className="flex items-center w-full justify-center mt-5">
                             <button type="button" className="btn-white justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>

@@ -1,20 +1,21 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../src/components/Header/Header'
-// import Footer from '../src/components//Footer/Footer'
-import About from './pages/About'
-import ProfilePage from './pages/ProfilePage'
+import Footer from '../src/components//Footer/Footer'
+import { FirebaseProvider } from './context/firebase'
 
 const Layout = () => {
 
   return (
     <>
+    <FirebaseProvider>
+
     <Header />
     <Outlet />
-    <About/>
-    {/* <Footer /> */}
-    <ProfilePage/>
+    <Footer />
+    
 
+    </FirebaseProvider>
     </>
   )
 }

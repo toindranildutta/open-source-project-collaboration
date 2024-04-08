@@ -1,30 +1,34 @@
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import React from 'react'
-import {auth} from '../firebase.js'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import {Link , useNavigate} from 'react-router-dom'
+import { useFirebase } from '../context/firebase';
 
 const Login = () => {
-  const[email, setEmail] = React.useState('')
-  const[password, setPassword] = React.useState('')
+  const firebase = useFirebase();
+  const navigate = useNavigate();
 
-  const signin = (e) => {
+  const[email, setEmail] = useState('')
+  const[password, setPassword] = useState('')
+
+  useEffect(() => {
+    if (firebase.isLoggedIn) {
+      // navigate to home
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const signin = async (e) => {
     e.preventDefault()
     if(!email || !password) {
       alert('Please enter email and password')
       return
     }
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log(user)
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage)
-    });
+    
+    try {
+     const user = await firebase.loginUserWithEmailAndPassword(email, password);
+     console.log("Successfully signed in:", user);
+    } catch {
+      console.error("Error signing in:", error);
+    }
 }
 
   return (
