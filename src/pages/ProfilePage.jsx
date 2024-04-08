@@ -33,9 +33,9 @@ function ProfilePage() {
             </div>
 
 
-            <div className=" flex m-4 p-3 bg-blue-500 bg-opacity-10 border border-blue-500 rounded-l-0 rounded-r-0">
+            <div className=" flex m-4 p-3 bg-blue-500 bg-opacity-10 shadow-2xl rounded-l-2 rounded-r-2">
 
-                <div className="w-[350px]  mx-auto bg-white border shadow-md h-[570px] p-4 mt-5">
+                <div className="w-[350px]  mx-auto bg-white border shadow-2xl   ` h-[570px] p-4 mt-5">
                     <div className='flex  justify-around '>
                         <div className='flex justify-center items-center'>
                             <img src={sh2} className="w-16 h-16" alt="profile" />
@@ -47,7 +47,7 @@ function ProfilePage() {
                         </div>
                     </div>
                     <div className="max-w-xs shadow-sm mt-4 mx-auto bg-white rounded-md" style={{ width: '20rem' }}>
-                        <ul className="list-none p-6 m-2 ">
+                        <ul className="list-none  p-6 m-2 ">
                             <li className="border-t border-gray-200 shadow-2xl ">An item</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
                             <li className=" border-t border-gray-200 shadow-2xl ">A second item</li>
@@ -114,7 +114,7 @@ function ProfilePage() {
                             <div className="p-4">
                                 <h5 className="text-lg font-semibold mb-1">Card title</h5>
                                 <h6 className="text-sm text-gray-600 mb-2">Card subtitle</h6>
-                                <a href="#" className="text-blue-500 hover:text-blue-600 mr-1">Card link</a>
+                                <a href="#" className="text-blue-500 hover:text-blue-600  mr-1">Card link</a>
                                 <a href="#" className="text-blue-500 hover:text-blue-600">Another link</a>
                             </div>
                         </div>
