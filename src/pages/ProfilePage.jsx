@@ -118,10 +118,13 @@ function ProfilePage() {
 
             <div className=" flex m-4 p-3 bg-blue-500 bg-opacity-10 shadow-2xl rounded-l-2 rounded-r-2">
 
-                <div className="w-[350px]  mx-auto bg-white border shadow-2xl   ` h-[570px] p-4 mt-5">
+                <div className="w-[350px]  mx-auto bg-white border shadow-2xl p-4 mt-5">
                     <div className='flex  justify-around '>
                         <div className='flex justify-center items-center'>
+
                             <img src={githubData?.avatar_url} className="w-16 h-16" alt="profile" />
+
+
                         </div>
                         <div className="flex flex-col items-start ">
                             <h2 className="text-xl font-bold text-green-600">{data?.name}</h2>
