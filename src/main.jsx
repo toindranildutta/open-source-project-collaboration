@@ -13,16 +13,32 @@ import Layout from './Layout.jsx';
 import Contact from './pages/Contact.jsx'
 import Login from './authentication/Login.jsx'
 import ErrorPage from './error/ErrorPage.jsx'
+import Signup from './authentication/Signup.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
+import PrivateRoutes from './utils/PrivateRoutes.jsx';
+import AddProfileDetails from './components/Profile/AddProfileDetails.jsx';
+import Repo from './pages/Repo.jsx';
+
 
 
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<Layout />}>
-            <Route path='home' element={<Homepage />} />
+
+            <Route element={<PrivateRoutes />}>
+                <Route path='profile/:userid' element={<ProfilePage />} />
+                <Route path='addprofile' element={<AddProfileDetails />} />
+                <Route path='repo' element={<Repo />} />
+            </Route>
+
+            <Route index path='home' element={<Homepage />} />
             <Route path='about' element={<About />} />
             <Route path='contact' element={<Contact />} />
             <Route path='login' element={<Login />} />
+            <Route path='signup' element={<Signup />} />
+            
+            
             <Route path="*" element={<ErrorPage />} />
         </Route>
     )
