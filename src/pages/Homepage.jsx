@@ -10,33 +10,23 @@ const Homepage = () => {
 
   // get data from firebase database
   useEffect(() => {
-    firebase.listAllUsers().then((data) => {  
-        setData(data.docs);
+    firebase.listAllUsers().then((data) => {
+      setData(data.docs);
     }, [])
 
   })
 
-  
 
-  // <div className="card-body" key={user.data().userID}>
-        //   <div className='flex justify-around '>
-        //     <div className="flex flex-col items-start ">
-        //       <h2 className="text-sm">{user.data().userID}</h2>
-        //       <h2 className="text-xl font-bold text-green-600">{user.data().name}</h2>
-        //       <h5 className=" ">{user.data().githuburl}</h5>
-        //       <h6 className=" mb-2 ">Want Collaboration: {user.data().wantcollaboration ? "Yes" : "No"}</h6>
-        //       <button className='bg-green-600 m-4 p-5'>View</button>
-        //     </div>
-        //   </div>
-        // </div>
   return (
-    <div className='grid grid-cols-3 '> {data.map((user) => (<UserCard key={user.data().userID} id={user.id} user={user.data()} /> ))}
+    <>{!data ? <h1 className='text-2xl font-bold text-center text-green-600'>Loading...</h1> :
+      <div className='flex justify-center'>
+        <div className='grid grid-cols-3 max-w-fit gap-16'> {data.map((user) => (<UserCard key={user.data().userID} id={user.id} user={user.data()} />))}
+        </div>
+      </div>
+    }
 
-        
 
-        
-     
-    </div>
+    </>
 
   )
 }

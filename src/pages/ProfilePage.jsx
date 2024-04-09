@@ -17,6 +17,7 @@ function ProfilePage() {
 
 
 
+
     useEffect(() => {
         // Fetch user data from Firebase
         firebase.getUserById(params.userid).then((userData) => {
@@ -59,9 +60,28 @@ function ProfilePage() {
             handleRepoData();
         }
     }, [data, githubData]);
+//==========================================================================
+    // handle repo add/remove to repolist to collaborate
+    const handleAddRepo = async (repo) => {
+        try {
+          await firebase.addRepositoryToRepolist(repo);
+        } catch (error) {
+          console.error('Error adding repository to repolist: ', error);
+          // Handle error, display error message, etc.
+        }
+      };
+    
+      const handleRemoveRepo = async (repoid) => {
+        try {
+          await firebase.removeRepositoryFromRepolist(repoid); // Pass the repository ID to remove
+        } catch (error) {
+          console.error('Error removing repository from repolist: ', error);
+          // Handle error, display error message, etc.
+        }
+      };
 
 
-
+//======================================================================
 
 
 
@@ -114,7 +134,7 @@ function ProfilePage() {
                         <ul className="list-none p-6 m-2 ">
                             <li className="border-t border-gray-200 shadow-2xl ">{githubData?.bio}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
-                            <li className="text-blue-600 border-t border-gray-200 shadow-2xl "><a href={githubData?.html_url}>Github Link</a></li>
+                            <li className="text-blue-600 border-t border-gray-200 shadow-2xl "><a href={githubData?.html_url} target='_blank'>Github Link</a></li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
                             <li className="border-t border-gray-200 shadow-2xl ">Company: {githubData?.company}</li>
@@ -132,7 +152,8 @@ function ProfilePage() {
                             <li className="border-t border-gray-200 shadow-2xl ">Last Seen: {githubData?.updated_at}</li>
                             <p className='border-t mb-2 shadow-2xl'></p>
 
-                            
+
+
                         </ul>
                     </div>
                 </div>
@@ -141,15 +162,25 @@ function ProfilePage() {
 
                 <div className="w-[900px] mx-auto border shadow-md  m-4">
                     <div className="p-4">
-                        {repoDetails.map((repo) => (
+                        {repoDetails.map((repo) => ( console.log(repo),
                             <>
-                                <div className="max-w-30vw mx-auto bg-white border shadow-2xl rounded-md mb-2">
+                                <div className="flex justify-start mx-auto bg-white border shadow-2xl rounded-md mb-2">
                                     <div className="p-4">
                                         <h5 className="text-lg font-semibold mb-1">{repo.name}</h5>
                                         <h6 className="text-sm text-gray-600 mb-2">{repo.description}</h6>
-                                        <a href={repo.html_url} className="text-blue-500 hover:text-blue-600 mr-1">Repo link</a>
+                                     
+                                        <a href={repo.html_url} target='_blank' className="text-blue-500 hover:text-blue-600 mr-1">Repo link</a>
+                                    </div>
+
+                                    <div className="flex justify-end items-center ml-auto mr-2">
+                                        <button onClick={() => handleAddRepo(repo)} className="text-sm text-gray-600 hover:text-gray-800 mr-1">
+                                            Like
+                                        </button>
+                                        <button onClick={() => handleRemoveRepo(repo.id)}>Unlike</button>
+                                    
                                     </div>
                                 </div>
+
                             </>
                         ))}
 

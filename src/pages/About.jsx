@@ -1,521 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import sh2 from '../assets/images/sh2.webp';
-import sh4 from '../assets/images/OSPC.png';
-import Ta2 from '../assets/images/Ta2.png';
-import Ta1Img from '../assets/images/Ta1.jpg';
+import React from 'react'
 
 const About = () => {
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [showExtraContent, setShowExtraContent] = useState(false);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000); // Update every second
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const toggleExtraContent = () => {
-    setShowExtraContent(!showExtraContent);
-  };
-
-  return (
-
-    <>
-      <div className='text-violate-500 font-san font-semi-bold text-4xl flex justify-center m-4'>
-        <p className='border-t-1 border-r-2 border-l-2 border-b-2 border-pink-500 p-2 rounded-2xl shadow-2xl  hover:bg-blue-900 hover:text-white hover:shadow-red-500'>All Participants</p>
-      </div>
-
-
-
-      <div flex flex-col>
-
-        <div className='flex w-full justify-around p-2 '>
-
-          <div className="p-2 flex w-[22%] shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body ">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className="mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500 ">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div >
-                      <h6 className="ml-9 font-semibold"> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500">
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className="ml-9 font-semibold">Tanmoy Dutta</h6>
-                      <small className="ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500">
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className="ml-9 font-semibold">Mr. chiku</h6>
-                      <small className="ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light py-1 text-[12px] hover:text-white hover:bg-blue-900 hover:shadow-white-md" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-
-
-
-          <div className=" p-2 flex w-[22%] shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-
-          <div className=" p-2 flex w-[22%]   shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px]  hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-
-          <div className=" p-2 flex w-[22%]   shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-
-        <div className='flex w-full justify-around p-2 mt-4'>
-
-          <div className=" p-2 flex w-[22%]   shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px]  hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-
-          <div className=" p-2 flex w-[22%]   shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px]  hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-
-          <div className=" p-2 flex w-[22%]   shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px]  hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-
-          <div className=" p-2 flex w-[22%]   shadow-2xl text-black border-t-2 border-b-2 border-cyan-500 hover:shadow-cyan-500 hover:text-white hover:bg-blue-900">
-            <div className="card-body">
-              <div className='flex justify-around '>
-                <div className='flex justify-center items-center'>
-                  <img src={sh4} className="w-16 h-16" alt="profile" />
-                </div>
-                <div className="flex flex-col items-start ">
-                  <h2 className="text-xl font-bold text-green-600">Participants</h2>
-                  <h5 className=" ">Date: {currentDateTime.toLocaleString()}</h5>
-                  <h6 className=" mb-2 ">Technology: Java</h6>
-                </div>
-              </div>
-
-              <div className="card w-full flex mt-5 ml-2">
-                <ul className="list-none flex flex-col">
-                  <li className=" flex mb-2 border shadow-2xl w-[300px]  hover:shadow-cyan-500">
-                    <img src={sh2} className="w-12 h-12 rounded-full mr-3 " alt="profile" />
-                    <div className=''>
-                      <h6 className=" ml-9 font-semibold "> Miss. Suhani</h6>
-                      <small className="ml-9 text-pink-400">tosuhani.@example.com</small>
-                    </div>
-                  </li>
-                  <li className="flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta1Img} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Tanmoy Dutta</h6>
-                      <small className=" ml-9 text-pink-400">mr.tanmoy.@example.com</small>
-                    </div>
-                  </li>
-                  <li className=" flex mb-2 border shadow-2xl w-[300px] hover:shadow-cyan-500"> {/* Changed to flex-col */}
-                    <img src={Ta2} className="w-12 h-12 rounded-full mr-3" alt="profile" />
-                    <div>
-                      <h6 className=" ml-9 font-semibold ">Mr. chiku</h6>
-                      <small className=" ml-9 text-pink-400">chiku.dutta@example.com</small>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {showExtraContent && (
-                <div className="card">
-                  <ul className="list-none">
-                    {/* Additional content here */}
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex items-center w-full justify-center mt-5">
-                <button type="button" className="btn-white text-orange-400 justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-                  SEE MORE &gt;&gt;
-                </button>
-
-              </div>
-
-            </div>
-          </div>
-
-
-        </div>
-
-      </div>
-
-      <div className="flex items-center w-full justify-center mt-6">
-        <button type="button" className="btn-white justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
-          SEE MORE &gt;&gt;
-        </button>
-
-      </div>
-
-    </>
-
+  return  (
+    <div className="max-w-3xl mx-auto px-4 py-8">
+      <h2 className="text-3xl font-bold mb-4">About Us</h2>
+      <p className="text-lg mb-4">
+        Welcome to OSPC, where collaboration meets opportunity!
+      </p>
+      <p className="text-lg mb-4">
+        At OSPC, we believe that great things happen when passionate individuals
+        come together to share their skills, ideas, and creativity. Whether
+        you're an aspiring entrepreneur, a seasoned professional, or someone
+        with a big dream and a drive to make it happen, our platform provides
+        the perfect space to connect with like-minded individuals and embark on
+        exciting collaborative projects.
+      </p>
+      <p className="text-lg mb-4">
+        Our mission is simple: to empower individuals to turn their visions
+        into reality by facilitating meaningful connections and fostering
+        collaborative communities. Whether you're looking to build a tech
+        startup, launch a creative endeavor, or tackle a social cause, OSPC
+        is here to help you find the right teammates to bring your projects to
+        life.
+      </p>
+      <p className="text-lg mb-4">
+        With our user-friendly platform, you can easily create a profile to
+        showcase your skills, interests, and project ideas. Browse through a
+        diverse range of project listings, connect with potential collaborators,
+        and embark on a journey of innovation and growth together.
+      </p>
+      <h3 className="text-2xl font-bold mb-2">Why OSPC?</h3>
+      <ul className="list-disc pl-8">
+        <li className="text-lg mb-2">
+          <strong>Connectivity:</strong> Our advanced matching algorithm connects
+          you with individuals who share your passion and complement your skills,
+          ensuring productive and fulfilling collaborations.
+        </li>
+        <li className="text-lg mb-2">
+          <strong>Diversity:</strong> Explore projects across various industries,
+          interests, and skill sets. Whether you're a developer, designer,
+          marketer, or strategist, there's a place for you on OSPC.
+        </li>
+        <li className="text-lg mb-2">
+          <strong>Community:</strong> Join a vibrant and supportive community of
+          creators, innovators, and changemakers. Share insights, seek advice,
+          and celebrate successes together.
+        </li>
+        <li className="text-lg mb-2">
+          <strong>Opportunity:</strong> Discover exciting projects and expand
+          your horizons. Whether you're looking to gain experience, build your
+          portfolio, or pursue your passion, OSPC opens doors to new opportunities.
+        </li>
+      </ul>
+      <p className="text-lg mt-4">
+        Join us today and embark on a journey of collaboration, creativity, and
+        endless possibilities. Together, let's build something extraordinary!
+      </p>
+    </div>
   );
-}
+};
 
-export default About;
+
+export default About

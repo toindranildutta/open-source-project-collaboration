@@ -17,7 +17,8 @@ import Signup from './authentication/Signup.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import PrivateRoutes from './utils/PrivateRoutes.jsx';
 import AddProfileDetails from './components/Profile/AddProfileDetails.jsx';
-import UserDetails from './pages/UserDetails.jsx';
+import Repo from './pages/Repo.jsx';
+
 
 
 
@@ -28,13 +29,15 @@ const router = createBrowserRouter(
             <Route element={<PrivateRoutes />}>
                 <Route path='profile/:userid' element={<ProfilePage />} />
                 <Route path='addprofile' element={<AddProfileDetails />} />
+                <Route path='repo' element={<Repo />} />
             </Route>
 
-            <Route path='home' element={<Homepage />} />
+            <Route index path='home' element={<Homepage />} />
             <Route path='about' element={<About />} />
             <Route path='contact' element={<Contact />} />
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<Signup />} />
+            
             
             <Route path="*" element={<ErrorPage />} />
         </Route>
