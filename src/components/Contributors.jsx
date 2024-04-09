@@ -25,4 +25,4 @@ const Contributors = (props) => {
             <div>{console.log(contributors)}{contributors.user}</div>
         )}
 
-export default Contributors
+export default Contributors ;
