@@ -122,7 +122,7 @@ function ProfilePage() {
                     <div className='flex  justify-around '>
                         <div className='flex justify-center items-center'>
 
-                            <img src={githubData?.avatar_url} className="w-16 h-16" alt="profile" />
+                            <img src={githubData?.avatar_url} className="w-16 h-16 flex mr-[20px] rounded-full" alt="profile" />
 
 
                         </div>
