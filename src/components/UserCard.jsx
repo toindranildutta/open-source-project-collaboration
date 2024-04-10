@@ -22,6 +22,7 @@ const UserCard = (props) => {
                     <h2 className="font-semibold">{props.user.name}</h2>
                     <p className="text-gray-500">{props.user.githuburl}</p>
                     <p className="text-gray-500">{props.user.userEmail}</p>
+                    <p>{console.log(props)}</p>
                   
                 </div>
                 {/* <ul className="py-4 mt-2 text-gray-700 flex items-center justify-around">

@@ -1,22 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import sh2 from '../assets/images/sh2.webp';
 import { useParams } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
-
-
-
 
 function ProfilePage() {
     const params = useParams();
     const firebase = useFirebase();
 
-
     const [data, setData] = useState(null);
     const [githubData, setGithubData] = useState(null);
     const [repoDetails, setRepoDetails] = useState([]);
+    const [checkedRepoUrls, setCheckedRepoUrls] = useState([]);
 
-
-
+    useEffect(() => {
+        firebase.listAllRepos().then((repos) => {
+            setCheckedRepoUrls(repos.docs);
+        })
+    }, [firebase]);
+    console.log(checkedRepoUrls.map ((repo) => console.log(repo.id )));
+    
+    const handleCheckboxChange = async (repoid, repoUrl) => {
+        var repooriginalid;
+        const isChecked = checkedRepoUrls.map((repo) => (repo.data().repoid === repoid) && (repooriginalid = repo.id));
+        if (!isChecked) {
+            try {
+                await firebase.addRepositoryToRepolist(repoid, repoUrl);
+                setCheckedRepoUrls([...checkedRepoUrls, repoid]);
+            } catch (error) {
+                console.error('Error adding repository to repolist: ', error);
+            }
+        }
+         else {
+            try {
+                await firebase.removeRepositoryFromRepolist(repooriginalid);
+                setCheckedRepoUrls(checkedRepoUrls.filter(id => id !== repoid));
+            } catch (error) {
+                console.error('Error removing repository from repolist: ', error);
+            }
+    };
+}
+    
 
     useEffect(() => {
         // Fetch user data from Firebase
@@ -60,53 +82,13 @@ function ProfilePage() {
             handleRepoData();
         }
     }, [data, githubData]);
-//==========================================================================
-    // handle repo add/remove to repolist to collaborate
-    const handleAddRepo = async (repo) => {
-        try {
-          await firebase.addRepositoryToRepolist(repo);
-        } catch (error) {
-          console.error('Error adding repository to repolist: ', error);
-          // Handle error, display error message, etc.
-        }
-      };
-    
-      const handleRemoveRepo = async (repoid) => {
-        try {
-          await firebase.removeRepositoryFromRepolist(repoid); // Pass the repository ID to remove
-        } catch (error) {
-          console.error('Error removing repository from repolist: ', error);
-          // Handle error, display error message, etc.
-        }
-      };
-
-
-//======================================================================
-
-
-
-    const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    const [showExtraContent, setShowExtraContent] = useState(false);
-
-
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         setCurrentDateTime(new Date());
-    //     }, 1000); // Update every second
-
-    //     return () => clearInterval(intervalId);
-    // }, []);
-
-    const toggleExtraContent = () => {
-        setShowExtraContent(!showExtraContent);
-    };
 
     return (
+
+        
         <>
             <div className="flex justify-between p-4 ml-4">
-                <div>
-                    <h5>{currentDateTime.toLocaleTimeString()}</h5>
-                </div>
+                
                 <div>
                     <form className="flex" role="search">
                         <input className="form-input mr-2 border rounded-md" type="search" placeholder="Search" aria-label="Search" />
@@ -165,23 +147,43 @@ function ProfilePage() {
 
                 <div className="w-[900px] mx-auto border shadow-md  m-4">
                     <div className="p-4">
-                        {repoDetails.map((repo) => ( console.log(repo),
+                        {repoDetails.map((repo) => (
                             <>
-                                <div className="flex justify-start mx-auto bg-white border shadow-2xl rounded-md mb-2">
+                                <div key={repo.url} className="flex justify-start mx-auto bg-white border shadow-2xl rounded-md mb-2">
                                     <div className="p-4">
                                         <h5 className="text-lg font-semibold mb-1">{repo.name}</h5>
                                         <h6 className="text-sm text-gray-600 mb-2">{repo.description}</h6>
-                                     
-                                        <a href={repo.html_url} target='_blank' className="text-blue-500 hover:text-blue-600 mr-1">Repo link</a>
+
+                                        <a href={repo.html_url} target='_blank' className="text-blue-500 hover:text-blue-600 mr-1">{repo.url}</a>
                                     </div>
 
-                                    <div className="flex justify-end items-center ml-auto mr-2">
+                                    {/* <div className="flex justify-end items-center ml-auto mr-2">
                                         <button onClick={() => handleAddRepo(repo)} className="text-sm text-gray-600 hover:text-gray-800 mr-1">
                                             Like
                                         </button>
                                         <button onClick={() => handleRemoveRepo(repo.id)}>Unlike</button>
                                     
-                                    </div>
+                                    </div> */}
+
+                                    <label className='flex cursor-pointer select-none items-center'>
+                                        <div className='relative'>
+                                            <input
+                                                type='checkbox'
+                                                checked={checkedRepoUrls.some((repo) => repo.data().repoid === repo.id)}
+                                                onChange={() => handleCheckboxChange(repo.id, repo.url)}
+                                                className='sr-only'
+                                            />
+                                            { checkedRepoUrls.some((repo) => repo.data().repoid === repo.id) ? <>
+                                                <div className='block h-8 w-14 rounded-full bg-green-400'></div>
+                                                <div className='dot absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition'></div>
+                                            </> :
+                                                <>
+                                                    <div className='block h-8 w-14 rounded-full bg-red-400'></div>
+                                                    <div className='dot absolute right-1 top-1 h-6 w-6 rounded-full bg-white transition'></div>
+                                                </>}
+                                        </div>
+                                    </label>
+
                                 </div>
 
                             </>
@@ -191,12 +193,12 @@ function ProfilePage() {
 
 
 
-                        <div className="flex items-center w-full justify-center mt-5">
+                        {/* <div className="flex items-center w-full justify-center mt-5">
                             <button type="button" className="btn-white justify-content-center font-light  py-1 text-[12px] shadow-2xl" onClick={toggleExtraContent}>
                                 SEE MORE &gt;&gt;
                             </button>
 
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>

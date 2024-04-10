@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 // Firebase imports
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, signInWithPopup, sendSignInLinkToEmail } from "firebase/auth";
 import {
   getFirestore, collection, addDoc, getDocs,
   getDoc, doc,
@@ -57,7 +57,9 @@ export const FirebaseProvider = ({ children }) => {
         setUser(null);
       }
     });
-  })
+    // Cleanup function to unsubscribe from the auth state listener
+  // return () => unsubscribe();
+  }, [])
 
   //==================================================
   // Sign up user using email and password
@@ -157,10 +159,11 @@ export const FirebaseProvider = ({ children }) => {
   const isLoggedIn = user ? true : false;
   //=================================================
   // Create New user data
-  const handleCreateNewUser = async (name, githuburl, wantcollaboration) => {
+  const handleCreateNewUser = async (name, githuburl, email, wantcollaboration) => {
     return await addDoc(collection(db, "users"), {
       name,
       githuburl,
+      email,
       wantcollaboration,
       userID: user.uid,
       userEmail: user.email,
@@ -187,27 +190,37 @@ export const FirebaseProvider = ({ children }) => {
   //=================================================
 
   // Function to add a repository to the repolist collection
-  const addRepositoryToRepolist = async (repoData) => {
-    try {
-      await setDoc(doc(db, 'repolist', repo.name), repo);
-    console.log('Repository added to repolist: ', repo.name);
-    } catch (error) {
+const addRepositoryToRepolist = async (repoid, repourl) => {
+  try {
+      return await addDoc(collection(db, "repolist"), {
+      repoid,
+      repourl,
+      userID: user.uid,
+      userEmail: user.email,
+      displayName: user.displayName,
+    });
+  } catch (error) {
       console.error('Error adding repository to repolist: ', error);
       throw error;
-    }
-  };
+  }
+};
 
-  //=================================================
-  // Function to remove a repository from the repolist collection
-  const removeRepositoryFromRepolist = async (repoId) => {
-    try {
-      await deleteDoc(doc(db, 'repolist', repoName));
-    console.log('Repository removed from repolist: ', repoName);
-    } catch (error) {
+//=================================================
+const listAllRepos = () => {
+  return getDocs(collection(db, "repolist"));
+};
+
+// Function to remove a repository from the repolist collection
+const removeRepositoryFromRepolist = async (repoid) => {
+  try {
+      await deleteDoc(doc(db, "repolist", repoid));
+      console.log('Repository removed from repolist: ', repoid);
+  } catch (error) {
       console.error('Error removing repository from repolist: ', error);
       throw error;
-    }
-  };
+  }
+};
+
   //=================================================
   // Return everything you want to provide
   return (
@@ -222,6 +235,7 @@ export const FirebaseProvider = ({ children }) => {
         getUserById,
         addRepositoryToRepolist,
         removeRepositoryFromRepolist,
+        listAllRepos,
         isLoggedIn,
         user
       }}
